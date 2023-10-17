@@ -1,0 +1,25 @@
+.boxContainer {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--yellow-fazag);
+    border-radius: 8px;
+    width: 500px;
+    padding: 1rem;
+    color: var(--blue-fazag);
+    .nomeContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .nome{
+            font-weight: bold;
+        }
+    }
+
+    .whatsapp{
+        background-color: var(--blue-fazag);
+        border-radius: 4px;
+        padding: .2rem;
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "fazag-leads-matriz",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "github:phosphor-icons/react",
+    "@prisma/client": "^5.4.2",
+    "next": "13.5.5",
+    "phosphor-icons": "^1.4.2",
+    "phosphor-react": "^1.4.1",
+    "prisma": "^5.4.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-icons": "^4.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "13.5.5",
+    "typescript": "^5"
+  }
+}
