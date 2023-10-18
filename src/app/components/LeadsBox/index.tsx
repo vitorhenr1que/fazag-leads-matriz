@@ -6,7 +6,8 @@ import {IoRadioButtonOff, IoRadioButtonOnOutline} from 'react-icons/io5'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { prisma } from '@/app/services/prisma'
-import { PutContacted } from '../PutContacted'
+import { api } from '@/app/services/api'
+import { LinkWhatsApp } from '../linkWhatsapp'
 
 
 interface LeadsBox {
@@ -16,9 +17,11 @@ interface LeadsBox {
     number: string;
     contacted: boolean;
     date: Date;
+    position: number;
+
 }
   
-export function LeadsBox({id, name, course, number, contacted, date}: LeadsBox){
+export function LeadsBox({id, name, course, number, contacted, date, position}: LeadsBox){
 
     function nomeTratado(nome: string){
         let nomeSplit = nome.split(' ')
@@ -37,7 +40,9 @@ export function LeadsBox({id, name, course, number, contacted, date}: LeadsBox){
     }
     
     const [turno, setTurno] = useState(["bom", "dia"])
-
+    const [toggle, setToggle] = useState(contacted)
+    const [atendente, setAtendente] = useState('')
+    
     function getHours(){
         const horario = new Date().getHours()
         if(horario >= 0 && horario <=11){
@@ -51,26 +56,83 @@ export function LeadsBox({id, name, course, number, contacted, date}: LeadsBox){
         }
     }
 
+    const alterarContato = async () => {
+        await api.post('updatecontacted', {
+            id,
+            contacted
+        })
+        console.log('entrou na função!')
+        setToggle(!toggle)
+        console.log(toggle)
+    }
 
+    const [linkWhatsapp, setLinkWhatsapp] = useState(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendente}*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
 
+    const [savedAtendent, setSavedAtendent] = useState(localStorage.getItem('actualAtendent') || '')
+    const [atendentName, setAtendentName] = useState(localStorage.getItem('nomeDoAtendent') || '')
+    
+    
+    const handleChange = (nomeAtendente: string) => {
+        const newAtendent = nomeAtendente
+        setAtendentName(newAtendent)
+        localStorage.setItem('nomeDoAtendent', newAtendent)
+
+        setSavedAtendent(newAtendent);
+        localStorage.setItem('actualAtendent', `https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${newAtendent}*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`);
+        
+        console.log(savedAtendent, 'Esse é o atendente')
+        window.location.reload()
+      };
+
+ 
+
+    const teste = linkWhatsapp
+    console.log(teste)
     useEffect(()=>{
          getHours()   
     },[])
 
-    return (
+    return position === 0 ? (
+        <>
+        <div className={styles.atendenteContainer}>
+            <h1>Atendente: {atendentName}</h1>
+            <div>
+                <input className={styles.input} type="text" placeholder="Insira o nome do atendente" onChange={(e) => {setAtendente(e.target.value)} }/>
+            </div>
+            <button onClick={() => handleChange(atendente)}>Confirma</button>
+        </div>
 
         <div className={styles.boxContainer}>
            
-            <div>
-            {contacted === false ? <IoRadioButtonOff size={30}/> : <IoRadioButtonOnOutline color="#5db80d" size={30}/>}
+            <div onClick={alterarContato} className={styles.circleContacted}>
+            {toggle === false ? <IoRadioButtonOff size={30}/> : <IoRadioButtonOnOutline color="#5db80d" size={30}/>}
             </div>
             <div className={styles.nomeContainer}>
                 <span className={styles.nome}>{nomeTratado(name)}</span>
                 <span>{course}</span>
             </div>
-            <Link onClick={getHours} href={`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*Atendente*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`} className={styles.whatsapp}>
+            <Link onClick={getHours} href={linkWhatsapp} className={styles.whatsapp}>
                 <MdWhatsapp color="white" size={30}/>
             </Link>
         </div>
+        </>
+    ) : 
+    (
+        <>
+        
+        <div className={styles.boxContainer}>
+           
+        <div onClick={alterarContato} className={styles.circleContacted}>
+        {toggle === false ? <IoRadioButtonOff size={30}/> : <IoRadioButtonOnOutline color="#5db80d" size={30}/>}
+        </div>
+        <div className={styles.nomeContainer}>
+            <span className={styles.nome}>{nomeTratado(name)}</span>
+            <span>{course}</span>
+            </div>
+            <Link onClick={getHours} href={savedAtendent} className={styles.whatsapp}>
+                <MdWhatsapp color="white" size={30}/>
+            </Link>
+        </div>
+        </>
     )
 }

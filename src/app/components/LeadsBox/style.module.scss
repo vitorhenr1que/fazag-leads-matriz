@@ -1,3 +1,20 @@
+.atendenteContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue-fazag);
+    .input {
+        text-align: center;
+        margin-top: 16px;
+        padding: 1rem;
+        border: none;
+        border-bottom: solid 1px var(--blue-fazag);
+        font-size: 20px;
+        color: var(--blue-fazag);
+    }
+}
+
 .boxContainer {
     margin-top: 1rem;
     display: flex;
@@ -16,7 +33,9 @@
             font-weight: bold;
         }
     }
-
+    .circleContacted{
+        cursor: pointer;
+    }
     .whatsapp{
         background-color: var(--blue-fazag);
         border-radius: 4px;
