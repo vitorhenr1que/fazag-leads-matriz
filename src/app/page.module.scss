@@ -13,6 +13,14 @@
   .leadsBoxContainer{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media(max-width: 550px){
+  .main {
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -4,14 +4,36 @@
     align-items: center;
     justify-content: center;
     color: var(--blue-fazag);
-    .input {
-        text-align: center;
-        margin-top: 16px;
-        padding: 1rem;
+    .divAtendentContainer{
+        display: flex;
+        padding: .5rem;
+        .input {
+            flex: 3;
+            text-align: center;
+            margin-top: 16px;
+            padding: 1rem;
+            border: none;
+            border-bottom: solid 1px var(--blue-fazag);
+            font-size: 20px;
+            color: var(--blue-fazag);
+        }
+        button{
+            flex: 1;
+        }
+    }
+
+    .setNameButton{
+       
         border: none;
-        border-bottom: solid 1px var(--blue-fazag);
-        font-size: 20px;
-        color: var(--blue-fazag);
+        background: var(--blue-fazag);
+        padding: 1rem;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: .1s;
+        &:hover {
+            background: #4d5d6d;
+        }
     }
 }
 
@@ -40,5 +62,17 @@
         background-color: var(--blue-fazag);
         border-radius: 4px;
         padding: .2rem;
+    }
+}
+
+@media(max-width: 550px){
+    .boxContainer{
+        width: 300px;
+    }
+    .divAtendentContainer{
+        flex-direction: column;
+        button{
+            margin-top: .5rem;
+        }
     }
 }

@@ -28,6 +28,7 @@ export function LeadsBox({id, name, course, number, contacted, date, position}: 
         let primeiraLetra = nomeSplit[0][0].toUpperCase()
         let restanteDoNome = nomeSplit[0].substring(1).toLowerCase()
         let nomeCorreto = primeiraLetra + restanteDoNome
+        
         return nomeCorreto
     }
 
@@ -66,7 +67,7 @@ export function LeadsBox({id, name, course, number, contacted, date, position}: 
         console.log(toggle)
     }
 
-    const [linkWhatsapp, setLinkWhatsapp] = useState(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendente}*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
+    const [linkWhatsapp, setLinkWhatsapp] = useState(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendente}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
 
     const [savedAtendent, setSavedAtendent] = useState(localStorage.getItem('actualAtendent') || '')
     const [atendentName, setAtendentName] = useState(localStorage.getItem('nomeDoAtendent') || '')
@@ -78,8 +79,8 @@ export function LeadsBox({id, name, course, number, contacted, date, position}: 
         localStorage.setItem('nomeDoAtendent', newAtendent)
 
         setSavedAtendent(newAtendent);
-        localStorage.setItem('actualAtendent', `https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${newAtendent}*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`);
-        
+        localStorage.setItem('actualAtendent', `https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${newAtendent}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`);
+
         console.log(savedAtendent, 'Esse é o atendente')
         window.location.reload()
       };
@@ -90,16 +91,19 @@ export function LeadsBox({id, name, course, number, contacted, date, position}: 
     console.log(teste)
     useEffect(()=>{
          getHours()   
+         setLinkWhatsapp(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendentName}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
     },[])
 
     return position === 0 ? (
         <>
         <div className={styles.atendenteContainer}>
             <h1>Atendente: {atendentName}</h1>
-            <div>
+           
+            <div className={styles.divAtendentContainer}>
                 <input className={styles.input} type="text" placeholder="Insira o nome do atendente" onChange={(e) => {setAtendente(e.target.value)} }/>
+                <button className={styles.setNameButton} onClick={() => handleChange(atendente)}>Definir</button>
             </div>
-            <button onClick={() => handleChange(atendente)}>Confirma</button>
+            
         </div>
 
         <div className={styles.boxContainer}>
@@ -129,7 +133,7 @@ export function LeadsBox({id, name, course, number, contacted, date, position}: 
             <span className={styles.nome}>{nomeTratado(name)}</span>
             <span>{course}</span>
             </div>
-            <Link onClick={getHours} href={savedAtendent} className={styles.whatsapp}>
+            <Link onClick={getHours} href={linkWhatsapp} className={styles.whatsapp}>
                 <MdWhatsapp color="white" size={30}/>
             </Link>
         </div>
