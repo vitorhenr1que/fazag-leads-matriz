@@ -3,24 +3,11 @@ import styles from './page.module.scss'
 import { LeadsBox } from './components/LeadsBox'
 import { prisma } from './services/prisma'
 
-async function PutContacted(id: string, contacted: boolean){
-
-
-  const response = await prisma.leads.update({
-       where: {
-           id: id
-       },
-       data: {
-           contacted: !contacted
-       }
-   })
-   console.log(response)
-}
 
 export default async function Home() {
   const response = await prisma.leads.findMany()
 
-  console.log(response)
+
   return (
     <main className={styles.main}>
         <div className={styles.leadsBoxContainer}>

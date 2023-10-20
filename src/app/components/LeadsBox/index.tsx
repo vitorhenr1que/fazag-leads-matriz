@@ -5,9 +5,7 @@ import {MdWhatsapp} from 'react-icons/md'
 import {IoRadioButtonOff, IoRadioButtonOnOutline} from 'react-icons/io5'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { prisma } from '@/app/services/prisma'
 import { api } from '@/app/services/api'
-import { LinkWhatsApp } from '../linkWhatsapp'
 
 
 interface LeadsBox {
@@ -65,7 +63,6 @@ export function LeadsBox({id, name, course, number, contacted, date, position, c
         })
         console.log('entrou na função!')
         setToggle(!toggle)
-        console.log(toggle)
     }
 
     const [linkWhatsapp, setLinkWhatsapp] = useState(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendente}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
