@@ -118,7 +118,7 @@ export function LeadsBox({id, name, course, number, contacted, date, position, c
                 <span className={styles.nome}>{nomeTratado(name)}</span>
                 <span>{course}</span>
             </div>
-            <Link onClick={getHours} href={linkWhatsapp} className={styles.whatsapp}>
+            <Link target='_blank' onClick={getHours} href={linkWhatsapp} className={styles.whatsapp}>
                 <MdWhatsapp color="white" size={30}/>
             </Link>
         </div>
@@ -136,7 +136,7 @@ export function LeadsBox({id, name, course, number, contacted, date, position, c
             <span className={styles.nome}>{nomeTratado(name)}</span>
             <span>{course}</span>
             </div>
-            <Link onClick={getHours} href={linkWhatsapp} className={styles.whatsapp}>
+            <Link target='_blank' onClick={getHours} href={linkWhatsapp} className={styles.whatsapp}>
                 <MdWhatsapp color="white" size={30}/>
             </Link>
         </div>
