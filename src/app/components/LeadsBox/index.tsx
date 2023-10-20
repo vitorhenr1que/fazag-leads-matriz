@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import styles from './style.module.scss'
 import {MdWhatsapp} from 'react-icons/md'
@@ -18,10 +18,11 @@ interface LeadsBox {
     contacted: boolean;
     date: Date;
     position: number;
+    countLength: number;
 
 }
   
-export function LeadsBox({id, name, course, number, contacted, date, position}: LeadsBox){
+export function LeadsBox({id, name, course, number, contacted, date, position, countLength}: LeadsBox){
 
     function nomeTratado(nome: string){
         let nomeSplit = nome.split(' ')
@@ -69,20 +70,24 @@ export function LeadsBox({id, name, course, number, contacted, date, position}: 
 
     const [linkWhatsapp, setLinkWhatsapp] = useState(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendente}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
 
-    const [savedAtendent, setSavedAtendent] = useState(localStorage.getItem('actualAtendent') || '')
-    const [atendentName, setAtendentName] = useState(localStorage.getItem('nomeDoAtendent') || '')
+        const [savedAtendent, setSavedAtendent] = useState('')
+        const [atendentName, setAtendentName] = useState('')
+    
+    
     
     
     const handleChange = (nomeAtendente: string) => {
         const newAtendent = nomeAtendente
         setAtendentName(newAtendent)
-        localStorage.setItem('nomeDoAtendent', newAtendent)
+        if (typeof window !== 'undefined') {
+        window.localStorage.setItem('nomeDoAtendent', newAtendent)
 
         setSavedAtendent(newAtendent);
-        localStorage.setItem('actualAtendent', `https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${newAtendent}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`);
+        window.localStorage.setItem('actualAtendent', `https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${newAtendent}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`);
 
         console.log(savedAtendent, 'Esse é o atendente')
         window.location.reload()
+         }
       };
 
  
@@ -90,11 +95,13 @@ export function LeadsBox({id, name, course, number, contacted, date, position}: 
     const teste = linkWhatsapp
     console.log(teste)
     useEffect(()=>{
+        setSavedAtendent(localStorage.getItem('actualAtendent') || '')
+        setAtendentName(localStorage.getItem('nomeDoAtendent') || '')
          getHours()   
          setLinkWhatsapp(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendentName}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
     },[])
 
-    return position === 0 ? (
+    return position === countLength - 1 ? (
         <>
         <div className={styles.atendenteContainer}>
             <h1>Atendente: {atendentName}</h1>

@@ -25,10 +25,11 @@ export default async function Home() {
     <main className={styles.main}>
         <div className={styles.leadsBoxContainer}>
           {response.map((index, position) => {
+            
             return (
-              <LeadsBox key={index.id} id={index.id} name={index.nome} course={index.course} contacted={index.contacted} number={index.tel} date={index.data} position={position}/> 
+              <LeadsBox key={index.id} id={index.id} name={index.nome} course={index.course} contacted={index.contacted} number={index.tel} date={index.data} position={position} countLength={response.length}/> 
             )
-          })}
+          }).reverse()}
         </div>
        
     </main>
