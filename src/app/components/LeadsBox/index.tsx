@@ -70,8 +70,8 @@ export function LeadsBox({id, name, course, number, contacted, date, position, c
 
     const [linkWhatsapp, setLinkWhatsapp] = useState(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendente}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
 
-        const [savedAtendent, setSavedAtendent] = useState('')
-        const [atendentName, setAtendentName] = useState('')
+        const [savedAtendent, setSavedAtendent] = useState('Matrículas')
+        const [atendentName, setAtendentName] = useState('Matrículas')
     
     
     
@@ -90,18 +90,15 @@ export function LeadsBox({id, name, course, number, contacted, date, position, c
          }
       };
 
-      function SetsLinkWhatsapp(){
-       return setLinkWhatsapp(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendentName}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
-      }
 
-    const teste = linkWhatsapp
-    console.log(teste)
+
+
     useEffect(()=>{
         setSavedAtendent(localStorage.getItem('actualAtendent') || '')
         setAtendentName(localStorage.getItem('nomeDoAtendent') || '')
          getHours()   
-         SetsLinkWhatsapp()
-    },[])
+         setLinkWhatsapp(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendentName}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
+    },[number, atendentName, name, turno])
 
     return position === countLength - 1 ? (
         <>
