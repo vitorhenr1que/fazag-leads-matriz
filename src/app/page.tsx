@@ -1,6 +1,5 @@
 
 import styles from './page.module.scss'
-import { InputAtendente } from './components/InputAtendente'
 import { LeadsBox } from './components/LeadsBox'
 import { prisma } from './services/prisma'
 
