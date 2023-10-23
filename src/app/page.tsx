@@ -3,6 +3,7 @@ import styles from './page.module.scss'
 import { LeadsBox } from './components/LeadsBox'
 import { prisma } from './services/prisma'
 
+export const revalidate = 3600
 
 export default async function Home() {
   const response = await prisma.leads.findMany()
