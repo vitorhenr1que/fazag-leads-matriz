@@ -32,10 +32,17 @@ export function LeadsBox({id, name, course, number, contacted, date, position, c
     }
 
     function numeroTratado(numero: string){
+        if(numero == ''){
+            return '(00) 0000-0000'
+        }
+
         let numeroSplit = numero.split(' ')
-        let numeroHifen = numeroSplit[1].split('-')
+
+        console.log(numeroSplit[1].split('-').join(''))
+
+        let numeroHifen = numeroSplit[1].split('-').join('')
         let ddd = numeroSplit[0][1] + numeroSplit[0][2]
-        let numeroCorreto = ddd + numeroHifen[0] + numeroHifen[1]
+        let numeroCorreto = ddd + numeroHifen
         return numeroCorreto
     }
     
@@ -95,7 +102,7 @@ export function LeadsBox({id, name, course, number, contacted, date, position, c
         setAtendentName(localStorage.getItem('nomeDoAtendent') || '')
          getHours()   
          setLinkWhatsapp(`https://api.whatsapp.com/send?phone=55${numeroTratado(number)}&text=*${atendentName}:*%0AOl%C3%A1%20${nomeTratado(name)},%20${turno[0]}%20${turno[1]}!`)
-    },[number, atendentName, name, turno])
+    },[number, atendentName, name])
 
     return position === countLength - 1 ? (
         <>
